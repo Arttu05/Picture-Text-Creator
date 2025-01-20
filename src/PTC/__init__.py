@@ -1,1 +1,0 @@
-from src.PTC.PTC import GetPictureWithText
