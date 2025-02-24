@@ -5,7 +5,7 @@ This project uses pillow and textwrap.
 # how to install 
 
 ```
-pip install PictureTextCreator==0.2
+pip install PictureTextCreator==0.2.1
 ```
 
 # Example
@@ -31,4 +31,5 @@ GetPictureWithText("./exampleTemplate.png",125,exampleText,exampleFontPath,outpu
 ![output picture](https://raw.githubusercontent.com/Arttu05/Picture-Text-Creator/refs/heads/main/example/output.png)
 
 # Note
-Tested with python 3.12.2 and pillow 11.1.0
+
+Tested with python 3.12.2 and pillow 10.4.0
