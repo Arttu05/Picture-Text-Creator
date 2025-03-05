@@ -1,9 +1,11 @@
 from PIL import Image, ImageFont, ImageDraw
 import textwrap
 
-def GetPictureWithText(templatePath, textCordinate, textToAdd , fontPath, outputPath, textColor = (0,0,0), backgroundColor = (255,255,255), fontSize = 45, textWrapValue = 39):
+def GetPictureWithText(templatePath, textCordinate, textToAdd , fontPath, outputPath, textColor = (0,0,0), backgroundColor = (255,255,255), fontSize = 45, textWrapValue = 39, leftSideMargin = 42):
 
     TEXTSIZE = fontSize
+    BOTTOMPADDING = 10 #pixels
+    
 
     templateTopImg = Image.open(templatePath)
     templateBotImg = Image.open(templatePath)
@@ -16,21 +18,21 @@ def GetPictureWithText(templatePath, textCordinate, textToAdd , fontPath, output
     #final image height = top template height + bot template height + textsize * lines
     topImgWidth, topImgHeight = templateTopImg.size
     botImgWidth, botImgHeight = templateBotImg.size
-    finalImageHeight = (TEXTSIZE * len(textLines)) + topImgHeight + botImgHeight
+    finalImageHeight = (TEXTSIZE * len(textLines)) + topImgHeight + botImgHeight + BOTTOMPADDING 
 
     finalImage = Image.new("RGBA",(topImgWidth, finalImageHeight))
 
     editImage = ImageDraw.Draw(finalImage)
-    editImage.rectangle([(0,topImgHeight),(topImgWidth,topImgHeight + (TEXTSIZE * len(textLines)))],fill=backgroundColor)
+    editImage.rectangle([(0,topImgHeight),(topImgWidth,topImgHeight + (TEXTSIZE * len(textLines)) + BOTTOMPADDING)],fill=backgroundColor)
     index = 0
     for line in textLines:
         imageText = ImageFont.truetype(fontPath,TEXTSIZE)
-        editImage.text((42, topImgHeight + (index * TEXTSIZE)),line, textColor ,imageText)
+        editImage.text((leftSideMargin, topImgHeight + (index * TEXTSIZE)),line, textColor ,imageText)
         index += 1
 
 
     finalImage.paste(templateTopImg,(0,0))
-    finalImage.paste(templateBotImg,(0, finalImageHeight - botImgHeight))
+    finalImage.paste(templateBotImg,(0, ((finalImageHeight - botImgHeight))))
     finalImage.save(outputPath)
 
 
